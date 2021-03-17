@@ -1,0 +1,21 @@
+1) node js là gì ?
+- qua 1 thằng trung gian 
+
+* module cần cài
+- morgan
+- dotenv
+- express
+- babel-cli
+- babel-preset-env
+- babel-preset-stage-0
+
+
+*
+
+
+* robo 3T
+
+
+
+--------------------- buổi 2--------------
+1) postman
