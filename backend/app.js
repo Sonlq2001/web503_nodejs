@@ -3,13 +3,28 @@ import morgan from  'morgan';
 import dotenv from  'dotenv';
 import productRouter from './routes/product';
 import categoryRouter from './routes/category';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 
 
 const app = express();
+// middle
+app.use(morgan('dev'));
+app.use(bodyParser.json());
 dotenv.config();
 
+// connect db 
+mongoose.connect(process.env.MONGODB_URI, {
+    userNewUrlParser: true,
+    createIndex: true
+}).then(() => {
+    console.log('db connect');
+})
 
-app.use(morgan('dev'));
+mongoose.connection.on('error', (err) => {
+    console.log(`db connection error: ${err.message}`);
+})
+
 const port = process.env.PORT || 8000;
 
 // routes

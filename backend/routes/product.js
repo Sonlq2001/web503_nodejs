@@ -1,13 +1,8 @@
 import express from 'express';
+import { addProduct }  from './../controllers/product.controller';
 
 const router = express.Router();
 
-router.get('/products', (req, res) => {
-    console.log('product list');
-
-    res.json({
-        message: "thanh cong"
-    })
-})
+router.get('/products', addProduct)
 
 module.exports = router;
