@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
     },
     description: {
         type: String,
+        trim: true,
         required: true,
         maxlength: 2000
     },
@@ -19,6 +20,11 @@ const productSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
+    },
+    photo: {
+        data: Buffer,
+        contentType: String
+
     },
     solid: {
         type: Number,
