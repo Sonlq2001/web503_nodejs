@@ -2,12 +2,14 @@ import Product from './../models/product';
 import formidable from 'formidable';
 import fs from 'fs';
 
-
+// danh sách sản phẩm
 export const listProduct = (req, res) => {
-    console.log('list product');
+    res.json({
+        message: 'ok list product'
+    })
 }
 
-
+// tạo sản phẩm
 export const create = (req, res) => {
     
     let form = new formidable.IncomingForm();
@@ -59,4 +61,39 @@ export const create = (req, res) => {
 
     
 
+}
+
+// lấy id
+export const productById = (req, res, next, id) => {
+    Product.findById(id).exec((err, product) => {
+        if(err || !product) {
+            res.status(400).json({
+                error: 'Không tìm thấy sản phẩm'
+            })
+        }
+        req.product = product;
+        next();
+    })
+}
+
+// chi tiết sản phẩm
+export const read = (req, res) => {
+    return res.json(req.product);
+}
+
+// xóa sản phẩm
+export const remove = (req, res) => {
+    const product = req.product;
+    product.remove((err, deletedProduct) => {
+        if(err) {
+            return res.status(400).json({
+                error: "Không xóa được sản phẩm"
+            })
+        }
+
+        res.json({
+            deletedProduct,
+            message: "Sản phẩm đã xóa thành công"
+        })
+    })
 }

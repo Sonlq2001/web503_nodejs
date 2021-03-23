@@ -1,21 +1,22 @@
 import express from 'express';
-import { listProduct, create }  from './../controllers/product.controller';
+import { listProduct, create, productById, read, remove }  from './../controllers/product.controller';
 
 const router = express.Router();
 
 // list products
 router.get('/products', listProduct)
 
-// product detail
-router.get('/product/:id', (req, res) => {
-    res.json({
-        id: req.params.id,
-        name: 'san pham 1'
-    })
-})
-
 // thêm sản phẩm
-router.post('/products/add', create)
+router.post('/products/add', create);
+
+// chi tiết sản phẩm
+router.get('/product/:productId', read);
+
+// xóa sản phẩm
+router.delete('/product/:productId', remove);
+
+// lấy id sản phẩm
+router.param('productId', productById);
 
 
 module.exports = router;
