@@ -1,5 +1,5 @@
 import express from 'express';
-import { listProduct, create, productById, read, remove }  from './../controllers/product.controller';
+import { listProduct, create, productById, read, update, remove }  from './../controllers/product.controller';
 
 const router = express.Router();
 
@@ -11,6 +11,9 @@ router.post('/products/add', create);
 
 // chi tiết sản phẩm
 router.get('/product/:productId', read);
+
+// sửa sản phẩm
+router.put('/product/:productId', update);
 
 // xóa sản phẩm
 router.delete('/product/:productId', remove);
