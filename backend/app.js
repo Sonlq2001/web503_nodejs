@@ -1,15 +1,18 @@
 import express from  'express';
 import morgan from  'morgan';
 import dotenv from  'dotenv';
-import productRouter from './routes/product';
-import categoryRouter from './routes/category';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
+import productRouter from './routes/product';
+import categoryRouter from './routes/category';
+
 
 const app = express();
+
 // middle
 app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 dotenv.config();
 
@@ -26,6 +29,8 @@ mongoose.connection.on('error', (err) => {
 })
 
 const port = process.env.PORT || 8000;
+
+
 
 // routes
 app.use('/api', productRouter);

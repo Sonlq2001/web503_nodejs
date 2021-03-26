@@ -62,10 +62,6 @@ export const create = (req, res) => {
         
     })
 
-    
-
-    
-
 }
 
 // lấy id
@@ -97,7 +93,7 @@ export const update = (req, res) => {
                 error: "Sửa sản phẩm không thành công"
             })
         }
-        // console.log(fields);
+
         // kiểm tra 
         const { name, description, price } = fields;
 

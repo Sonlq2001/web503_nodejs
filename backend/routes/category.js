@@ -1,12 +1,13 @@
 import express from 'express';
 
-const routerCate = express.Router();
+import { list, create } from './../controllers/category.controller';
 
-routerCate.get('/categories', (req, res) => {
+const router = express.Router();
 
-    res.json({
-        message: "thanh cong category"
-    })
-})
+// list category
+router.get('/categories', list);
 
-module.exports = routerCate;
+// add category
+router.post('/categories/add', create);
+
+module.exports = router;
