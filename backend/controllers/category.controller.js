@@ -28,3 +28,56 @@ export const create = (req, res) => {
 		res.json({ data })
 	})
 }
+
+//  lấy id category
+export const categoryId = (req, res, next, id) => {
+	Category.findById(id).exec((err, category) => {
+		if(err || !category){
+			res.status(400).json({
+				error: "Không tìm thấy danh mục"
+			})
+		}
+		req.category = category;
+		next();
+	})	
+
+}
+
+// chi tiết danh mục
+export const read = (req, res) => {
+	return res.json(req.category);
+}
+
+// sửa danh mục
+export const update = (req, res) => {
+	// lấy thông tin gửi lên
+	const category = req.category;
+	category.name = req.body.name;
+
+	// lưu vào db
+	category.save((err, data) => {
+		if(err || !category) {
+			res.status(400).json({
+				error: "Không tìm thấy danh mục !"
+			})
+		}
+
+		res.json({ data });
+	})
+}
+
+// xóa danh mục sản phẩm
+export const remove = (req, res) => {
+	const category = req.category;
+	category.remove((err, deleteCate) => {
+		if(err || !category){
+			res.status(400).json({
+				error: "Xóa sản phẩm không thành công !"
+			})
+		}
+		res.json({
+			deleteCate,
+			message: "Xóa thành công danh mục !"
+		})
+	})
+}

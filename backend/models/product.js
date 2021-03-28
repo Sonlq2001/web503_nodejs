@@ -1,5 +1,12 @@
 import mongoose from 'mongoose';
+const { ObjectId } = mongoose.Schema;
+
 const productSchema = new mongoose.Schema({
+    categoryId: {
+        type: ObjectId,
+        ref: "category",
+        required: true
+    },
     name: {
         type: String,
         trim: true,
