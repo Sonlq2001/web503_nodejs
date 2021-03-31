@@ -1,0 +1,12 @@
+.ml-5{
+    margin-left: 20px !important;
+}
+
+/* flex */
+.d-flex{
+    display: flex;
+
+}
+.justify-content-between {
+    justify-content: space-between;
+}

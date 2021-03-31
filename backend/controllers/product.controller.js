@@ -9,9 +9,12 @@ export const listProduct = (req, res) => {
         if(err) {
             error: 'Không tìm thấy danh sách sản phẩm'
         }
-
-        res.json({ data })
+        // res.json({ data })
+        res.render('product/list_product', {
+            dataProduct: data
+        });
     })
+
 }
 
 // tạo sản phẩm
@@ -148,4 +151,8 @@ export const remove = (req, res) => {
             message: "Sản phẩm đã xóa thành công"
         })
     })
+}
+
+export const formAdd = (req, res) => {
+    res.render('product/add_prd');
 }

@@ -1,5 +1,5 @@
 import express from 'express';
-import { listProduct, create, productById, read, update, remove }  from './../controllers/product.controller';
+import { listProduct, formAdd, create, productById, read, update, remove }  from './../controllers/product.controller';
 
 const router = express.Router();
 
@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/products', listProduct)
 
 // thêm sản phẩm
+router.get('/products/add', formAdd);
 router.post('/products/add', create);
 
 // chi tiết sản phẩm
