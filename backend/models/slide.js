@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
 const slideSchema = new mongoose.Schema({
-	image: {
+	photo: {
 		data: Buffer,
 		contentType: String,
-		// required: true
+		
 	},
 	pathImage: {
 		type: String,

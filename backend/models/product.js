@@ -11,19 +11,18 @@ const productSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        maxlength: 32
+        maxLength: 200
     },
     description: {
         type: String,
         trim: true,
         required: true,
-        maxlength: 2000
+        maxLength: 2000
     },
     price: {
         type: Number,
         trim: true,
         required: true,
-        maxlength: 2000,
     },
     quantity: {
         type: Number,
@@ -31,7 +30,6 @@ const productSchema = new mongoose.Schema({
     photo: {
         data: Buffer,
         contentType: String
-
     },
     solid: {
         type: Number,
@@ -40,7 +38,16 @@ const productSchema = new mongoose.Schema({
     shopping: {
         required: false,
         type: Boolean
+    },
+    sale: {
+        type: Number,
+        default: 0
+    },
+    type_prd: {
+        type: Number,
+        default: 0
     }
+    
 }, {timestamps: true} )
 
 module.exports = mongoose.model('Product', productSchema);

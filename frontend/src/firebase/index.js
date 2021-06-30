@@ -1,14 +1,16 @@
-import firebase from 'firebase';
+// import firebase from 'firebase';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDL5_G4fW8_ewg1wCRcQp8x1auEV525txI",
-  authDomain: "one-piece-shop.firebaseapp.com",
-  projectId: "one-piece-shop",
-  storageBucket: "one-piece-shop.appspot.com",
-  messagingSenderId: "404732398924",
-  appId: "1:404732398924:web:8b2d010516fdf4320213e9"
-};
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAFX2q3IdbhyfFwMlI05ZVrsmvgdUyuTUc",
+//   authDomain: "image-4188c.firebaseapp.com",
+//   projectId: "image-4188c",
+//   storageBucket: "image-4188c.appspot.com",
+//   messagingSenderId: "313299344678",
+//   appId: "1:313299344678:web:1daa8b6f3a50817767b5e7",
+//   measurementId: "G-7MS1M6QJ1S"
+// };
+// // Initialize Firebase
+// firebase.initializeApp(firebaseConfig);
+// firebase.analytics();
 
-  export default firebase;
+// export default firebase;

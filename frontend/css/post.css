@@ -40,7 +40,7 @@
 }
 .sidebar-post{
     margin: 3rem 3rem 0 0;
-    color: rgba(255, 255, 255, 0.8);
+    color: #667f99;
     position: sticky;
     top: 6rem;
 }
@@ -266,7 +266,7 @@
 .cate-hashtag{
     text-decoration: none;
     font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: #667f99;
     display: block;
     padding: 1rem 1rem 1rem 0;
     transition: 0.3s;
@@ -296,12 +296,12 @@
 }
 .post{
     display: flex;
-    color: #fff;
+    color: #333;
     transition: 0.3s;
     border-radius: 3px;
 }
 .post:hover {
-    background-color: rgba(255, 255, 255, 0.1)
+    background-color: rgb(240, 240, 240);
 }
 .author-post{
     padding: 1rem;
@@ -315,25 +315,25 @@
 .body-post{
     flex-grow: 1;
     display: flex;
-    color: rgba(255, 255, 255, 0.8);
+    color: #333;
     text-decoration: none;
     padding: 1rem;
 }
-.body-post:hover {
+/* .body-post:hover {
     color: rgba(255, 255, 255, 0.8);
-}
+} */
 .content-post{
     width: 60%;
 }
 .title-post{
     font-size: 1.9rem;
-    font-weight: 300;
+    font-weight: 400;
 }
 .des-post{
     font-size: 1.2rem;
     word-break: break-all;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.6);
+    /* font-weight: 300; */
+    color: rgb(158, 158, 158);
     height: 3.6rem;
     overflow: hidden;
     display: -webkit-box;
@@ -341,7 +341,7 @@
     -webkit-line-clamp: 2;
 }
 .time-post{
-    color: rgba(255, 255, 255, 0.6);
+    color: rgb(158, 158, 158);
 }
 .cate-post{
     flex-grow: 1;
@@ -354,6 +354,7 @@
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
     height: 2rem;
+    color: #fff;
 }
 .view-post{
     display: flex;

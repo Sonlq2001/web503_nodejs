@@ -1,10 +1,11 @@
 .page-cart {
   display: inline-block;
-  background-color: var(--backgroundMain);
+  background-color: #fff;
+  box-shadow: 0 2px 3px #ddd;
   padding: 0.5rem 2rem;
 }
 .page-cart__title {
-  color: #fff;
+  color: #333;
   font-size: 1.8rem;
   font-weight: 400;
   display: inline-block;
@@ -16,11 +17,12 @@
 }
 .cart-title {
   display: flex;
-  color: #fff;
+  color: #333;
   font-size: 1.3rem;
-  background-color: var(--backgroundMain);
+  background-color: #fff;
   padding: 0.7rem 2rem;
   border-bottom: 1px solid #aaa;
+  box-shadow: 0 2px 3px #ddd;
 }
 
 .cart-title__product {
@@ -39,10 +41,11 @@
 }
 
 .list-cart {
-  background-color: var(--backgroundMain);
+  background-color: #fff;
   padding: 2rem;
-  color: #fff;
+  color: #333;
   display: flex;
+  box-shadow: 0 2px 3px #ddd  ;
 }
 .list-cart__img {
   max-width: 10rem;
@@ -86,8 +89,8 @@
 }
 /* btn-finish */
 .finish-cart {
-  background-color: var(--backgroundMain);
-  color: #fff;
+  background-color: #fff;
+  color: #333;
   padding: 1.5rem;
   position: sticky;
   position: -webkit-sticky;
@@ -268,4 +271,25 @@
 .btn-agree:hover {
   background-color: rgb(33, 90, 156);
   color: #fff;
+}
+
+
+/* status order admin */
+.notice{
+  animation: checkOrder linear 0.4s infinite;
+  cursor: pointer;
+}
+
+.checked{
+  color: green;
+  animation: default;
+}
+@keyframes checkOrder {
+  from {
+    opacity: 1;
+    color: red;
+  } to {
+    opacity: 0;
+    color: red;
+  }
 }

@@ -1,20 +1,28 @@
 import productApi from "./../api/productApi";
+import userApi from './../api/userApi';
+import orderApi from './../api/orderApi';
+import cartApi from './../api/cartApi';
+
 import { $, resetRender } from "./../utils.js";
 
 import HeaderMainSearch from "./HeaderMainSearch";
 
+import storage from './../storages/storage';
+
 const Header = {
     async render() {
-        const userInfo = JSON.parse(localStorage.getItem("user"));
+        
+        const userLogin = JSON.parse(localStorage.getItem("user"));
+        const checkAdmin = storage.getId();
         let checkRole;
 
         const checkUser = () => {
-            if (userInfo === null) {
+            if (userLogin === null) {
                 return /*html*/ `<a href="/#/sign-in" class="sign-in">Đăng nhập</a>`;
             } else {
-                if(userInfo.role == 1){
+                if(checkAdmin.user.role == 1){
                     checkRole = `<li class="item-model">
-                                    <a href="http://localhost:4040/#/login-admin" target="_blank"  class="path-model" id="next-page-admin">
+                                    <a href="/#/admin" class="path-model" id="next-page-admin">
                                         <span class="icon-model">
                                             <i class="fas fa-users-cog"></i>
                                         </span>
@@ -76,7 +84,7 @@ const Header = {
         };
 
         return /*html*/ `
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" id="header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top header-color" id="header">
             <div class="container">
                 <a class="navbar-brand logo" href="/#/">
                     <img src="./images/logo.png" alt="" class="logo__img">
@@ -117,115 +125,36 @@ const Header = {
         `;
     },
 
-    // async afterRender() {
-    //     // header search
-    //     HeaderMainSearch.afterRender();
+    async afterRender() {
+        HeaderMainSearch.afterRender();
 
-    //     // clear local user when next page admin
-    //     const nextPage = $('#next-page-admin');
-    //     if(nextPage) {
-    //         nextPage.onclick = () => {
-    //             localStorage.removeItem('user');
-    //         }
-    //     } 
-
-
-    //     // get total product in cart
-    //     const userInfo = JSON.parse(localStorage.getItem("user"));
-    //     let showTotalCart = $(".cart-quantity");
-    //     let totalCart = 0;
-
-    //     // tính tổng số cart
-    //     function fucTotalCart (dataCart) {
-    //         if (dataCart !== null) {
-    //             dataCart.forEach((product) => {
-    //                 totalCart += product.quantity;
-    //             });
-    //             showTotalCart.innerText = totalCart;
-    //         } else {
-    //             showTotalCart.innerText = 0;
-    //         }
-    //     }
-
-    //     // check statusCart user
-    //     if (userInfo !== null) {
-    //         const dataCart = await JSON.parse(localStorage.getItem("prdInCart"));
-    //         if(userInfo.statusCart == true) {
-    //             fucTotalCart(dataCart);
-    //         } else {
-    //             fucTotalCart(dataCart);
-    //         }
-    //     }
-
-    //     // box model user
-    //     const { data: dataOrderSave } = await ordersSaveApi.getAll();
-    //     const { data: dataUser } = await userApi.getAll();
-    //     if (userInfo !== null) {
-    //         // toggle btn user
-    //         $(".user-func__icon").addEventListener("click", () => {
-    //             $(".box-user").classList.toggle("toggle-user");
-    //         });
-
-    //         // sign out
-    //         const orders = JSON.parse(localStorage.getItem("prdInCart"));
-    //         $(".sign-out").addEventListener("click", () => {
-    //             if (orders) {
-                    
-    //                 // if(dataOrderSave.length <= 0) {
-    //                 //     orders.forEach(order => {
-    //                 //         ordersSaveApi.add(order);
-    //                 //     })
-    //                 // } else {
-    //                 //     dataOrderSave.forEach(orderSave => {
-    //                 //         const old = orders.filter(order => {
-    //                 //             return order.id == orderSave.id && order.idUser == orderSave.idUser;
-    //                 //         })
-                            
-    //                 //         const orderNew = orders.filter(order => {
-    //                 //             return order.id != orderSave.id && order.idUser == orderSave.idUser;
-    //                 //         })
-    //                 //         console.log(orderNew);
-    //                 //     })
-    //                 // }
-
-    //                 // orders.forEach(order => {
-    //                 //     const ordersOld = dataOrderSave.filter(orderOld => {
-    //                 //         return orderOld.id == order.id && orderOld.idUser == order.idUser;
-    //                 //     })
-
-    //                 //     const ordersNew = dataOrderSave.filter(orderNew => {
-    //                 //         return order.id !== orderNew.id && orderNew.idUser == order.idUser;
-    //                 //     })
-    //                 //     // ordersSaveApi.add(ordersNew);
-    //                 //     console.log(ordersOld);
-    //                 // })
-
-    //                 // update statusCart
-    //                 dataUser.forEach((user) => {
-    //                     if (user.id == userInfo.id) {
-    //                         user.statusCart = true;
-    //                         userApi.update(user, userInfo.id);
-    //                     }
-    //                 });
-
-    //                 localStorage.clear();
-    //                 window.location.reload();
-    //             } else {
-    //                 localStorage.clear();
-    //                 window.location.reload();
-    //             }
-    //         });
-    //     }
+        // box control user
+        const userInfo = storage.getId();
+        if (userInfo !== undefined) {
+            // hiển thị tổng số sp trong giỏ hàng theo từng use
+            const {data : carts} = await cartApi.getAll();
+            const filterCart = carts.filter(cart => {
+                return cart.userId == userInfo.user._id;
+            })
+            let totalCart = 0;
+            filterCart.forEach(cart => {
+                totalCart += cart.quantity;
+            })
+            $('.cart-quantity').innerHTML = totalCart;
 
 
-    //     // highlight btn 
-    //     const btnNav = $('.nav-link');
-    //     btnNav.forEach(btn => {
-    //         btn.addEventListener('click', () => {
-    //             btn.classList.add('active-header');
-    //         })
-    //     })
-    // },
+            // toggle btn user
+            $(".user-func__icon").addEventListener("click", () => {
+                $(".box-user").classList.toggle("toggle-user");
+            });
+
+            // sign out
+            $(".sign-out").addEventListener("click", async () => {
+                localStorage.removeItem('user');
+                window.location.reload();
+            });
+        }
+    },
 };
 
 export default Header;

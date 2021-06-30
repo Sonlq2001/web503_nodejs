@@ -7,17 +7,13 @@ const orderSchema = new mongoose.Schema({
         ref: 'user',
         required: true
     },
-    timerOrder: {
-    	type: String,
-
-    },
     name: {
     	type: String,
     	trim: true,
     	required: true,
     },
     phone: {
-    	type: Number,
+    	type: String,
     	trim: true,
     	required: true
     },
@@ -36,14 +32,15 @@ const orderSchema = new mongoose.Schema({
     	trim: true,
     	required: true,
     },
-    addressDetail: {
+    address_detail: {
     	type: String,
     	trim: true,
-    },
-    SaveInfo: {
-    	type: Array
     }
+    // ,
+    // save_info: {
+    // 	type: Array
+    // }
 
 }, { timestamps: true });
 
-module.exports = mongoose.moodel('Order', orderSchema);
+module.exports = mongoose.model('Order', orderSchema);

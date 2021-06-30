@@ -18,19 +18,20 @@ export const list = (req, res) => {
 // add category
 export const create = (req, res) => {
 	const category = new Category(req.body);
-
+	
 	category.save((err, data) => {
 		if(err) {
 			return res.status(400).json({
 				message: "Thêm danh mục thất bại !"
 			})
 		}
-		res.json({ data })
+		res.json({ data });
 	})
 }
 
 //  lấy id category
 export const categoryId = (req, res, next, id) => {
+
 	Category.findById(id).exec((err, category) => {
 		if(err || !category){
 			res.status(400).json({
@@ -53,7 +54,7 @@ export const update = (req, res) => {
 	// lấy thông tin gửi lên
 	const category = req.category;
 	category.name = req.body.name;
-
+	
 	// lưu vào db
 	category.save((err, data) => {
 		if(err || !category) {
@@ -69,6 +70,7 @@ export const update = (req, res) => {
 // xóa danh mục sản phẩm
 export const remove = (req, res) => {
 	const category = req.category;
+	
 	category.remove((err, deleteCate) => {
 		if(err || !category){
 			res.status(400).json({
@@ -80,4 +82,10 @@ export const remove = (req, res) => {
 			message: "Xóa thành công danh mục !"
 		})
 	})
+}
+
+// user id
+export const userId = (req, res, next, id) => {
+	// console.log(req.body);
+	req.category = req.body;
 }

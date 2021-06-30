@@ -29,10 +29,16 @@ block content
                                     td #{prd.name}
                                     td 
                                     td 
+                                        img(src=`http://localhost:4000/api/products/photo/${prd._id}`)
                                     td.center #{prd.price}
                                     td.center #{prd.description}
                                     td
                                         a(class="btn btn-primary") Sửa
-                                        button(type="button", class="btn btn-danger ml-5") Xóa
+                                        button(type="button", class="btn btn-danger ml-5" data-id=prd._id) Xóa
+    //- xóa sản phẩm
+    form(method="POST", class="form-delete")
+
+
+
                         
                 

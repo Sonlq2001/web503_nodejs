@@ -1,12 +1,14 @@
 .detail-top {
-  background-color: rgb(37, 37, 37);
+  background-color: #fff;
   margin-top: 2rem;
   padding: 2rem;
+  box-shadow: 0 2px 3px #ddd;
 }
 .product-img {
   width: 100%;
   height: 30.7rem;
   overflow: hidden;
+  border: 1px solid #ddd;
 }
 .product-img__main {
   width: 100%;
@@ -18,12 +20,12 @@
 
 .detail-prd {
   display: block;
-  color: #fff;
+  color: #333;
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 .product-name {
-  color: #fff;
+  color: #333;
   font-size: 2rem;
   margin-bottom: 2.5rem;
 }
@@ -35,6 +37,9 @@
   display: inline-block;
   background-color: red;
   margin-right: 2.5rem;
+  color: #fff;
+  padding: 2px 4px;
+  font-weight: 600;
 }
 .title-highlight {
   display: inline-block;
@@ -42,9 +47,10 @@
   font-weight: 500;
   font-size: 1.7rem;
   margin-left: 2rem;
+  text-decoration: underline;
 }
 .product-cate {
-  color: #fff;
+  color: #333;
 }
 
 .group-quantity {
@@ -53,7 +59,7 @@
 }
 .product-group__title {
   margin: 0;
-  color: #fff;
+  color: #333;
   font-size: 1.5rem;
   display: inline-block;
   margin-right: 2rem;
@@ -106,9 +112,10 @@ input[type="number"] {
 }
 .list-service {
   padding: 0;
+  list-style: none;
 }
 .service__title {
-  color: #fff;
+  color: #333;
 }
 .service-box {
   display: flex;
@@ -121,7 +128,7 @@ input[type="number"] {
 .service-box__name {
   display: inline-block;
   margin-left: 1.5rem;
-  color: #fff;
+  color: #333;
   font-size: 1.3rem;
 }
 
@@ -137,13 +144,15 @@ input[type="number"] {
 /* row detail-info */
 .detail-info {
   margin-top: 1.5rem;
-  color: #fff;
+  color: #333;
 }
 .detail-group,
 .product-other {
-  background-color: rgb(37, 37, 37);
+  background-color: #fff;
   padding: 2rem;
+  box-shadow: 0 2px 3px #ddd;
 }
+
 .product-other {
   position: sticky;
   top: 6rem;
@@ -188,8 +197,9 @@ button.disable {
 
 /* box-comment */
 .box-comment {
-  background-color: rgb(37, 37, 37);
+  background-color: #fff;
   padding: 2rem;
+  box-shadow: 0 2px 3px #ddd;
 }
 .box-comment__title {
   font-size: 2rem;
@@ -220,14 +230,14 @@ button.disable {
   border: none;
   border-bottom: 1px solid rgb(90, 90, 90);
   background: transparent;
-  color: rgba(255, 255, 255, 0.8);
+  color: #333;
   height: 4rem;
   font-size: 1.4rem;
 }
 .group-cmt-info__value::placeholder {
   font-size: 1.4rem;
-  color: rgba(255, 255, 255, 0.6);
-  font-weight: 350;
+  color: rgb(133, 133, 133);
+  /* font-weight: 350; */
 }
 .group-cmt-action {
   position: absolute;
@@ -271,10 +281,10 @@ button.disable {
 .cmt-other {
   display: flex;
   margin-top: 2.5rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: #333;
 }
 .cmt-content {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #eee;
   padding: 0.8rem 1.2rem;
   border-radius: 1.5rem;
 }
@@ -284,7 +294,7 @@ button.disable {
 }
 .cmt-content__text {
   font-size: 1.4rem;
-  font-weight: 350;
+  /* font-weight: 350; */
   margin-top: 0.2rem;
   word-break: break-all;
 }

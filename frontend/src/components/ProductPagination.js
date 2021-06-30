@@ -1,4 +1,6 @@
-import { $ } from './../utils';
+import { $, resetRender } from './../utils';
+import productApi from './../api/productApi';
+import ProductsPage from './../pages/ProductsPage';
 
 const ProductPagination = {
     render () {
@@ -15,12 +17,12 @@ const ProductPagination = {
                                 </a>
                             </li>
                             <li class="pagination-item">
-                                <a href="" class="pagination-link active-p">
+                                <a href="http://localhost:8000/#/products?page=1" class="pagination-link active-p">
                                     1
                                 </a>
                             </li>
                             <li class="pagination-item">
-                                <a href="" class="pagination-link">
+                                <a href="http://localhost:8000/#/products?page=2" class="pagination-link">
                                     2
                                 </a>
                             </li>
@@ -38,8 +40,12 @@ const ProductPagination = {
         `
     },
 
-    afterRender () {
-        
+    async afterRender () {
+        const minusPage = $('.btn-minus');
+        minusPage.onclick = async () => {
+            // const totalRecords = await productApi.getAll(2);
+            // resetRender(ProductsPage, '.main');
+        }
     }
 }
 

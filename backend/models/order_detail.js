@@ -22,8 +22,8 @@ const orderDetailSchema = new mongoose.Schema({
 	},
 	status: {
 		type: Number,
-		default: 0
+		default: 1
 	}
 }, { timestamps: true });
 
-module.exports = orderDetailSchema.model('Order', orderDetailSchema);
+module.exports = mongoose.model('OrderDetail', orderDetailSchema);

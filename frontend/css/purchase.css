@@ -1,10 +1,11 @@
 .sidebar {
-  background-color: rgb(37, 37, 37);
+  background-color: #fff;
+  box-shadow: 0 2px 3px #ddd;
 }
 .user-order {
   display: flex;
   padding: 1rem;
-  color: #fff;
+  color: #333;
 }
 .user-order__image {
   width: 5rem;
@@ -32,7 +33,7 @@
   display: block;
   text-decoration: none;
   font-size: 1.4rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: #333;
   padding: 1rem;
   transition: 0.2s;
 }
@@ -50,14 +51,15 @@
 
 /* status order */
 .status-navigation {
-  background-color: rgb(37, 37, 37);
+  background-color: #fff;
   height: 5.5rem;
+  box-shadow: 0 2px 3px #ddd;
 }
 .list-status {
   list-style: none;
   padding: 0;
   margin: 0;
-  color: rgba(255, 255, 255, 0.8);
+  color: #333;
   display: flex;
   height: 100%;
   align-items: center;
@@ -88,7 +90,7 @@
 }
 
 .form-search-order {
-  background-color: rgb(47, 47, 47);
+  background-color: rgb(240, 240, 240);
   height: 4rem;
   margin-top: 1rem;
 }
@@ -99,31 +101,32 @@
   width: 100%;
   height: 100%;
   padding: 0 2rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: #333;
   font-size: 1.3rem;
 }
 .order-search::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(105, 105, 105, 0.4);
   font-size: 1.3rem;
 }
 .status-main {
-  background-color: rgb(37, 37, 37);
+  background-color: #fff;
   margin-top: 1rem;
+  box-shadow: 0 2px 3px #ddd;
 }
 .panes {
   display: none;
 }
-.show-all {
+.show-all, .wait-confirm {
   padding: 1rem;
 }
 .table-order {
   width: 100%;
-  color: rgba(255, 255, 255, 0.8);
+  color: #333;
 }
 .table-order,
 th,
 td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(189, 188, 188, 0.3);
 }
 .table-order th {
   font-size: 1.5rem;
@@ -199,4 +202,11 @@ td {
 
 .panes.active {
   display: block;
+}
+
+.tb-name{
+  width: 280px;
+}
+.tb-status{
+  color: red;
 }

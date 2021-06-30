@@ -4,7 +4,7 @@ export const currentURL = () => {
     const handleCurrentURL = currentURL.split('/');
     return {
         resource: handleCurrentURL[1],
-        id: handleCurrentURL[2]
+        id: handleCurrentURL[2],
     }
 }
 
@@ -34,5 +34,9 @@ export const pagination = async (component, data, start, end) => {
     // await component.afterRender();
 }
 
-// handle cart
+export const getUrlParams = url => {
+    const paramsData = url.match(/([^?=&]+)(=([^&]*))/g) || [];
+    return paramsData.reduce(
+      (a,v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf("=") + 1)), a), {})
+}
 

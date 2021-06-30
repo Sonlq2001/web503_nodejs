@@ -1,48 +1,77 @@
 import User from './../models/user';
-import formidable from 'formidable';
-import fs from 'fs';
 
-// tạo user
-export const create = (req, res) => {
-	let form = new formidable.IncomingForm();
-    form.keepExtensions = true;
+export const detailUser = (req, res) => {
+    req.profile.hashed_password = undefined;
+    req.profile.salt = undefined;
 
-	form.parse(req, (err, fields, files) => {
-		if(err){
-			return res.status(400).json({
-				error: "Đăng kí tài khoản thất bại !"
-			})
-		}
+    return res.json(req.profile);
+}
 
-		const { name, email, password, phone } = fields;
-		if(!name || !email || !password || !phone){
-			return res.status(400).json({
-				error: "Bạn cần nhập đủ thông tin !"
-			})
-		}
+export const list = (req, res) => {
+    User.find((error, data) => {
+        if(error) {
+            return res.status(400).json({
+                message: 'Không tìm thấy danh sách user'
+            })
+        }
+        res.json(data);
+    })
+}
 
-		let user = new User(fields);
+export const userById = (req, res, next, id) => {
+    User.findById(id).exec((error, user) => {
+        if(error || !user) {
+            return res.status(400).json({
+                error: 'User not found'
+            })
+        }
+        req.profile = user;
+        next();
+    })
+}
 
-		// if(files.avatar) {
-		// 	if(files.avatar.size > 100000){
-		// 		res.status(400).json({
-		// 			error: "Bạn nên upload file ảnh dưới 1mb"
-		// 		})
-		// 	}
-		// 	user.avatar.data = fs.readFileSync(files.avatar.path);
-		// 	user.avatar.contentType = files.avatar.path;
-		// }
+export const id = (req, res, next, id) => {
+    User.findById(id).exec((error, user) => {
+        if(error || !user) {
+            return res.status(400).json({
+                error: 'User not found'
+            })
+        }
+        req.user = user;
+        next();
+    })
+}
 
-		user.save((err, data) => {
-            if(err) {
-            	console.log(err);
-                res.status(400).json({
-                    error: "Đăng kí tài khoản thất bại !"
+export const update = (req, res) => {
+    User.findOneAndUpdate(
+        { _id: req.user.id },
+        { $set: req.body },
+        { new: true },
+        (err, user) => {
+            if(err){
+                return res.status(400).json({
+                    error: 'You are not authorized to perform in action'
                 })
             }
+            req.profile.hashed_password = undefined;
+            req.profile.salt = undefined;
+            res.json(user);
+        }
 
-            res.json(data);
+    );
+}
+
+export const remove = (req, res) => {
+    const removeUser = req.user;
+    removeUser.remove((err, data) => {
+        if(err) {
+            return res.status(400).json({
+                err: 'Xóa user không thành công !'
+            })
+        }
+        res.json({
+            data,
+            message: 'Xóa thành công user !'
         })
-
-	})
+    })
 }

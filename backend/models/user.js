@@ -1,39 +1,70 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
+const crypto = require('crypto');
+const { v4: uuidv4 } = require('uuid');
 
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
         required: true,
-        maxLength: 32
-    },
-    phone: {
-        type: String,
-        trim: true,
-        required: true,
-        maxLength: 15
+        maxLength: 100
     },
     email: {
         type: String,
         trim: true,
         required: true,
-        maxLength: 50,
+        unique: 32
     },
-    password: {
+    hashed_password: {
+        type: String,
+        required: true,
+    },
+    about: {
         type: String,
         trim: true,
-        required: true,
-        maxLength: 20
     },
-    avatar: {
-        data: Buffer,
-        contentType: String
+    salt: {
+        type: String
     },
     role: {
         type: Number,
         default: 0
+    },
+    history: {
+        type: Array,
+        default: []
     }
 
-}, { timestamps: true });
+}, { timestamps: true })
 
-module.exports = mongoose.model('User', userSchema);
+// tạo ra 1 filed ảo
+userSchema.virtual('password')
+    .set(function (password) {
+        this.salt = uuidv4() // mã unique
+        // mã hóa mật khẩu
+        this.hashed_password = this.encrytPassword(password)
+    })
+
+
+// signin
+userSchema.methods = {
+    // kiểm tra mật khẩu có trùng với giá trị user nhập vào
+    authenticate: function (plainText) {
+        return this.encrytPassword(plainText)  === this.hashed_password;
+    },
+
+    encrytPassword: function (password) {
+        if(!password) return '';
+
+        try{
+            return crypto
+                .createHmac('sha1', this.salt)
+                .update(password)
+                .digest('hex')
+        }catch(error) {
+            return '';
+        }
+    }
+}
+
+module.exports = mongoose.model("User", userSchema);

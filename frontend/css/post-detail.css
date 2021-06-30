@@ -1,4 +1,6 @@
-
+.post-detail{
+    background-color: #eee;
+}
 .author-article{
     margin-top: 2rem;
     color: rgba(255,255,255, 0.8);
@@ -18,8 +20,14 @@
 
 }
 .action-follow{
-    color: rgba(255,255,255, 0.8);
+    color: var(--main-color);
+    margin-top: 1rem;
+}
+.post-author{
+    display: block;
     margin-top: 2rem;
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 .follow-author{
     font-size: 1.3rem;
@@ -33,7 +41,7 @@
 
 .article-content{
     margin-top: 3rem;
-    color: rgba(255,255,255, 0.8);
+    color: #333;
     text-align: justify;
 }
 .header-article{

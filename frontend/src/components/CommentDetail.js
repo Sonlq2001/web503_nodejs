@@ -1,54 +1,37 @@
 import { currentURL, $, resetRender } from './../utils';
-import commentsApi from './../api/commentsApi';
+import storage from './../storages/storage';
+import commentApi from './../api/commentApi';
 import userApi from './../api/userApi';
+
 import ProductDetail from './../pages/ProductDetail';
 
 const CommentDetail = {
     async render () {
         let idPrd = currentURL().id;
-        const { data : comments } = await commentsApi.getAll();
-        const { data : users } = await userApi.getAll();
+        const {data : listComment} = await commentApi.getAll();
+        const {data : listUser} = await userApi.getAllUser();
         
-        let userCmt = [];
-        comments.forEach(cmt => {
-            // lấy ra user cmt
-            const user = users.filter(user => {
-                return user.id == cmt.idUser;
+        const resultCmt = [];
+
+        listComment.forEach(cmt => {
+            // lấy user comment
+            const userCmt = listUser.filter(user => {
+                return user._id == cmt.userId;
             })
-            
-            // lấy ra cmt theo sp và theo user cmt
-            const handleCmt = user.map(item => {
-                if(item.id == cmt.idUser && cmt.idPrd == idPrd){
-                    return { 
-                        id: cmt.id,
-                        name: item.name,
+   
+            const listUserCmt = userCmt.map(user => {
+                if(user._id == cmt.userId && cmt.prdId == idPrd){
+                    return {
+                        // id: cmt.id,
+                        name: user.name,
                         content: cmt.content,
-                        timeCmt: cmt.timeCmt,
-                        avatar: item.file
+                        timeCmt: cmt.createdAt,
+                        // avatar: item.file
                     }
                 }
             })
-            
-            userCmt.push(...handleCmt);
+            resultCmt.push(...listUserCmt);
         })
-
-        // sort comments
-        const sortCmt = userCmt.sort((cmt1, cmt2) => {
-            return cmt2.id - cmt1.id;
-        })
-
-        // get avatar user
-        let avatarUser;
-        const userLogin = JSON.parse(localStorage.getItem('user'));
-        if(userLogin){
-            const findUser = users.find(user => {
-                return user.id == userLogin.id;
-            })
-            avatarUser = findUser.file;
-        } else {
-            avatarUser = './images/avatar.jpg';
-        }
-        
 
         return /*html*/ `
             <div class="box-comment">
@@ -56,7 +39,7 @@ const CommentDetail = {
                 <div class="form-cmt">
                     <div class="group-cmt">
                         <div class="group-cmt-info">
-                            <img src="${avatarUser}" alt="" class="group-cmt-info__avatar">
+                            <img src="" alt="" class="group-cmt-info__avatar">
                             <input type="text" placeholder="Bình luận đánh giá về sản phẩm" class="group-cmt-info__value">
                         </div>
                         <div class="group-cmt-action active">
@@ -67,12 +50,12 @@ const CommentDetail = {
                 </div>
 
                 ${
-                    userCmt.map(cmt => {
+                    resultCmt.map(cmt => {
                         if(cmt !== undefined) {
                             return /*html*/ `
                                 <div class="cmt-other">
                                     <div class="cmt-avatar">
-                                        <img src="${cmt.avatar}" alt="" class="group-cmt-info__avatar">
+                                        <img src="" alt="" class="group-cmt-info__avatar">
                                     </div>
                                     <div class="cmt-body">
                                         <div class="cmt-content">
@@ -125,23 +108,27 @@ const CommentDetail = {
 
         // post comment
         let idPrd = currentURL().id;
-        btnPostCmt.onclick = () => {
-            const user = JSON.parse(localStorage.getItem('user'));
-            const timeNow = new Date();
-            const timeCmt = `${timeNow.getHours()}:${timeNow.getMinutes()}/${timeNow.getDate()}/${timeNow.getMonth() + 1}/${timeNow.getFullYear()} `;
+        const user = storage.getId();
+        btnPostCmt.onclick = async () => {
+            
             if(user) {
                 valueCmt = inputComment.value.trim();
                 if(valueCmt !== ''){
                     const comment = {
-                        idUser: user.id,
-                        idPrd: idPrd,
-                        content: valueCmt,
-                        timeCmt: timeCmt
+                        userId: user.user._id,
+                        prdId: idPrd,
+                        content: valueCmt
                     }
-                    commentsApi.add(comment);
-                    resetRender(CommentDetail, '.box-comment');
-                    // resetRender(ProductDetail, '.cmt-product');
+                    const { data } = await commentApi.add(comment);
+                    try{
+                        if(data){
+                            resetRender(CommentDetail, '.box-comment');
+                        }
+                    }catch(error){
+
+                    }
                 }
+
             } else {
                 window.location.href="http://localhost:8080/#/sign-in";
             }

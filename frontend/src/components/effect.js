@@ -1,4 +1,5 @@
-import { resetRender } from './../utils';
+import { $, resetRender } from './../utils';
+import storage from './../storages/storage';
 	// slide
 	export function slide (box, boxSlide, slides) {
 		let index = 1;
@@ -72,6 +73,9 @@ import { resetRender } from './../utils';
 	
 	// option quantity product
 	export const optionQuantityProduct = (btnMinus, btnPlus, valueQuantity, selectInput, selectMinus, component, position) => {
+		// const inStorage = storage.getId();
+		// const result = localStorage.getItem('prdInCart');
+		// console.log(result);
 		const updateQuantityAndRender = (_this) => {
 			const dataPrd = JSON.parse(localStorage.getItem('prdInCart'));
 			const idPrd = (_this.parentElement).dataset.id;
@@ -79,7 +83,7 @@ import { resetRender } from './../utils';
 			
 			if(dataPrd.length > 1) {
 				dataPrd.forEach(product => {
-					if(product.id == idPrd){
+					if(product._id == idPrd){
 						if(classElement){
 							product.quantity += 1;
 							localStorage.setItem('prdInCart', JSON.stringify(dataPrd));

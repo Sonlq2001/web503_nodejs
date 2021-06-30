@@ -1,24 +1,14 @@
-import postsApi from './../api/postsApi';
+import postApi from './../api/postApi';
 import catePostApi from './../api/catePostApi';
 import { $,resetRender } from './../utils';
 import PostPage from './../pages/PostPage';
-import firebase from './../firebase';
+import storage from './../storages/storage';
 
 const SideBarPost = {
     async render () {
-        const { data : posts } = await postsApi.getAll();
+        // const { data : posts } = await postsApi.getAll();
         const { data : catePost } = await catePostApi.getAll();
         
-        // trả ra bài post khớp với id post
-        let listPost = [];
-        catePost.forEach(cate => {
-            const postCate = posts.filter(post => {
-                return post.idCatePost == cate.id;
-            })
-            listPost.push(postCate);
-        })
-        
-
         return /*html*/ `
             <div class="post-let">
                 <div class="sidebar-post">
@@ -39,10 +29,10 @@ const SideBarPost = {
                             ${
                                 catePost.map(cate => {
                                     return /*html*/ `
-                                   <a href="/#/posts/${cate.id}" class="cate-hashtag">
-                                        <span class="icon-tag"></span> 
-                                        ${cate.cate_post}
-                                    </a>
+                                        <a href="/#/posts/${cate._id}" class="cate-hashtag">
+                                            <span class="icon-tag"></span> 
+                                            ${cate.name}
+                                        </a>
                                     `;
                                 }).join("")
                             }
@@ -70,7 +60,7 @@ const SideBarPost = {
                                          ${
                                             catePost.map(cate => {
                                                 return /*html*/ `
-                                                    <option value="${cate.id}">${cate.cate_post}</option>
+                                                    <option value="${cate._id}">${cate.name}</option>
                                                 `;
                                             }).join("")
                                         }
@@ -121,6 +111,7 @@ const SideBarPost = {
         // handle model post
         const btnCreatPost = $('.btn-create-post');
         const modelPost = $('.model-post');
+  
         btnCreatPost.onclick = () => {
             modelPost.classList.add('active-model');
         }
@@ -140,9 +131,8 @@ const SideBarPost = {
         const contentPost = $('.text-post');
         const imgPost = $('.open-file');
         const btnPost = $('.btn-get-out');
-        const timeNow = new Date();
-        const timeOrder = `${timeNow.getHours()}:${timeNow.getMinutes()}/${timeNow.getDate()}/${timeNow.getMonth() + 1}/${timeNow.getFullYear()}`;
-        const userPost = JSON.parse(localStorage.getItem('user'));
+
+        const userPost = storage.getId();
 
         // sử lý khi nhập ( event )
         titlePost.oninput = () => {
@@ -154,32 +144,21 @@ const SideBarPost = {
         }
 
         // add post
-        btnPost.onclick = () => {
+        btnPost.onclick = async () => {
             if(userPost) {
                 if(titlePost.value !== '' && contentPost.value !== '') {
                     const post = {
-                        id: Math.random().toString(36).substr(2, 9),
-                        idCatePost: catePost.value,
-                        idUser: userPost.id,
+                        catePostId: catePost.value,
+                        userId: userPost.user._id,
                         header_post: titlePost.value,
                         content_post: contentPost.value,
-                        timePost: timeOrder
                     }
-
-                    const file = imgPost.files[0];
-                    const storageRef = firebase.storage().ref(`images/${file.name}`);
-                    storageRef.put(file).then(() => {
-                        storageRef.getDownloadURL().then((url) => {
-                            post.image_post = [url];
-                            postsApi.add(post);
-                            modelPost.classList.remove('active-model');
-                            resetRender(SideBarPost, '.post-let');
-                            resetRender(PostPage);
-                        })
-                    })
-
                     
-                    // window.scrollTo(0,0);
+                    const {data: upPost} = await postApi.add(post);
+                    if(upPost){
+                        modelPost.classList.remove('active-model');
+                        resetRender(PostPage, '.post-page');
+                    }
                 }
             } else {
                 window.location.href="/#/sign-in";

@@ -30,14 +30,16 @@ const ProductControl = {
 
     async afterRender () {
         // sort product
-        const { data: dataPrd } = await productApi.getAll();
+        const { data: { data: dataPrd } } = await productApi.getAll();
 
         let selectPrice = $('#order-price');
         selectPrice.addEventListener('change', () => {
             const newProducts = dataPrd.sort((item1, item2) => {
                 if (selectPrice.value == 1) {
+                    // từ thấp đến cao
                     return item1.price - item2.price;
                 } else if (selectPrice.value == 2) {
+                    // từ cao đến thấp
                     return item2.price - item1.price;
                 }
             })
@@ -45,24 +47,26 @@ const ProductControl = {
         })
 
         // classify  product
-
-        // btn control
         const btnControl = $('.btn-control');
         btnControl.forEach(btn => {
             btn.onclick = () => {
                 $('.btn-control.btn-active').classList.remove('btn-active');
                 btn.classList.add('btn-active');
 
+                // const flagBtn = indexOf(btn.className);
+
                 if(btn.classList.contains('btn-sale')){
                     const prdSale = dataPrd.filter(prd => {
                         return prd.sale != undefined && prd.sale != '';
                     })
                     resetRender(ProductsPage, '.main', prdSale);
+
                 } else if(btn.classList.contains('btn-all')){
                     resetRender(ProductsPage, '.main', dataPrd);
+
                 } else if (btn.classList.contains('btn-especially')){
                     const prdEspecially = dataPrd.filter(prd => {
-                        return (prd.sale != undefined || prd.sale != '') && prd.type_prd == 2;
+                        return (prd.sale != undefined || prd.sale != '') && prd.type_prd == 1;
                     })
                     resetRender(ProductsPage, '.main', prdEspecially);
                 }

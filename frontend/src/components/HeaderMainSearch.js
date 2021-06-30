@@ -1,11 +1,12 @@
 import { $ } from './../utils';
 import productApi from './../api/productApi';
+import SearchResult from './../pages/SearchResultPage';
 
 const HeaderMainSearch = {
     render() {
         return /*html */ `
-            <form action="" class="form-search">
-                <input type="text" placeholder="Tìm kiếm..." class="input-search">
+            <form action="" class="form-search" method="GET">
+                <input type="text" placeholder="Tìm kiếm..." class="input-search" name="q">
                 <button class="btn-search">Tìm kiếm</button>
             </form>
         `;
@@ -15,21 +16,16 @@ const HeaderMainSearch = {
         const { data: dataPrd } = await productApi.getAll();
         const btnSearch = $('.form-search');
 
-        btnSearch.addEventListener('submit', (e) => {
+        btnSearch.addEventListener('submit', async (e) => {
             e.preventDefault();
             const valueSearch = $('.input-search').value.toLowerCase().trim();
-
-            if(valueSearch) {
-                const searchResults = dataPrd.filter(product => {
-                    return product.name.toLowerCase().includes(valueSearch);
-                })
-                
-                // đẩy lên local
-                localStorage.setItem('search-results', JSON.stringify(searchResults));
-                window.location.href="/#/search-result";
+            if(valueSearch){
+                window.location.href= `/#/search/${valueSearch}`;
+                sessionStorage.setItem('key', JSON.stringify(valueSearch));
             } else {
-                alert('nhập tìm kiếm');
+                alert('Cần nhập giá trị tìm kiếm !')
             }
+            
         })
     }
 }

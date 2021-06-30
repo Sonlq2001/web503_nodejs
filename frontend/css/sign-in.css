@@ -3,9 +3,10 @@
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  background-color: rgb(37, 37, 37);
+  background-color: #fff;
   padding: 2rem;
-  color: #fff;
+  color: #333;
+  box-shadow: 0 2px 3px #ddd;
 }
 .form-left {
   width: 45%;
@@ -40,7 +41,7 @@
 }
 .txt-input {
   outline: none;
-  border: none;
+  border: 1px solid var(--main-color);
   height: 3.5rem;
   width: 100%;
   border-radius: 2px;
@@ -82,6 +83,10 @@
   color: rgba(199, 69, 69, 0.897);
   font-size: 1.3rem;
 }
+.err-server{
+  color: rgba(199, 69, 69, 0.897);
+  font-size: 1.3rem;
+}
 .err-message {
   display: block;
 }
@@ -93,7 +98,7 @@
 }
 
 .sign-up {
-  color: #fff;
+  color: var(--main-color);
   font-size: 1.3rem;
   text-decoration: none;
   transition: 0.3s;
@@ -107,10 +112,11 @@
 .form-feed-back{
   max-width: 50rem;
   margin: 0 auto;
-  background-color: rgb(37, 37, 37);
+  background-color: #fff;
   padding: 3rem 8rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: #3A4752;
   margin-top: 2rem;
+  box-shadow: 0 2px 3px #ddd;
 }
 .title-form-fb{
   font-size: 2.5rem;
@@ -125,7 +131,7 @@
   height: 10rem;
   font-size: 1.4rem;
   outline: none;
-  border: none;
+  border: 1px solid var(--main-color);
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 3px;
 }

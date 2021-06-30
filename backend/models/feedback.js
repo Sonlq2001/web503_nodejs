@@ -27,9 +27,6 @@ const feedbackSchema = new mongoose.Schema({
 		trim: true,
 		required: true,
 		maxLength: 2000
-	},
-	time: {
-		type: String,
 	}
 }, { timestamps: true });
 
